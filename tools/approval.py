@@ -277,6 +277,13 @@ DANGEROUS_PATTERNS = [
     # a script is first made executable then immediately run. The script
     # content may contain dangerous commands that individual patterns miss.
     (r'\bchmod\s+\+x\b.*[;&|]+\s*\./', "chmod +x followed by immediate execution"),
+    # NemoClaw sandbox protection: prevent accidental destruction or config mutation
+    (r'\bnemoclaw\b.*\b(destroy|delete)\b', "destroy/delete NemoClaw sandbox"),
+    (r'\bnemoclaw\b.*\breinstall\b', "reinstall NemoClaw sandbox"),
+    (r'\bopenshell\s+gateway\s+(destroy|stop)\b', "stop/destroy OpenShell gateway"),
+    (r'\bnemoclaw\s+exec\b.*\bopenclaw\s+config\b', "modify OpenClaw config inside sandbox"),
+    (r'\bnemoclaw\s+exec\b.*\bopenclaw\s+gateway\b', "manage OpenClaw gateway via exec"),
+    (r'>\s*/sandbox/\.openclaw/openclaw\.json\b', "overwrite sandbox OpenClaw config directly"),
 ]
 
 
